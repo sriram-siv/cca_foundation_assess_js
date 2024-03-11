@@ -18,11 +18,11 @@ function calculateShipping(country, orderTotal, callback) {
                 let shipping = 0.0;
 
                 if (region === "UK") {
-                    if (orderTotal < 30.0) {
+                    if (orderTotal < 100.0) {
                         shipping = 4.99;
                     }
                 } else if (region === "EU") {
-                    if (orderTotal < 30) {
+                    if (orderTotal < 100) {
                         shipping = 8.99;
                     } else {
                         shipping = 4.99;

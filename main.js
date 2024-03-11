@@ -8,9 +8,9 @@ function printShippingCosts(country, orderTotal) {
     calculateShipping(country, orderTotal, callback);
 }
 
-printShippingCosts(Country.UNITED_KINGDOM, 29.99);
-printShippingCosts(Country.UNITED_KINGDOM, 30.00);
-printShippingCosts(Country.FRANCE, 29.99);
-printShippingCosts(Country.FRANCE, 30.00);
-printShippingCosts(Country.ALBANIA, 29.99);
-printShippingCosts(Country.ALBANIA, 30.00);
+printShippingCosts(Country.UNITED_KINGDOM, 99.99);
+printShippingCosts(Country.UNITED_KINGDOM, 100.00);
+printShippingCosts(Country.FRANCE, 99.99);
+printShippingCosts(Country.FRANCE, 100.00);
+printShippingCosts(Country.ALBANIA, 99.99);
+printShippingCosts(Country.ALBANIA, 100.00);
