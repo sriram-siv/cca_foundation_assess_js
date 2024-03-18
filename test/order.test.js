@@ -9,6 +9,6 @@ describe("order", () => {
     const order = new Order("100 High Street, London");
     order.addItem(product, 25);
 
-    expect(order.items.length).toBe(1);
+    expect(order.items).toEqual([{ product, quantity: 25 }]);
   });
 });
