@@ -15,4 +15,9 @@ export class Warehouse {
   constructor() {
     this.productStockDictionary = {};
   }
+
+  receiveStock(product, quantity) {
+    this.productStockDictionary[product.id] ??= 0;
+    this.productStockDictionary[product.id] += quantity;
+  }
 }
