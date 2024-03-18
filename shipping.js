@@ -38,5 +38,5 @@ export function calculateShipping(region, orderTotal) {
     return orderTotal < 100 ? 8.99 : 4.99;
   }
 
-  return 9.99;
+  return orderTotal < 200 ? 9.99 : 5.99;
 }

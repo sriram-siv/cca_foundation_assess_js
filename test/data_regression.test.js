@@ -48,13 +48,13 @@ describe("printShippingCosts", () => {
     ],
     [
       Country.ALBANIA,
-      99.99,
-      "Shipping cost to Albania for order total £99.99 is £9.99",
+      199.99,
+      "Shipping cost to Albania for order total £199.99 is £9.99",
     ],
     [
       Country.ALBANIA,
-      100.0,
-      "Shipping cost to Albania for order total £100 is £9.99",
+      200.0,
+      "Shipping cost to Albania for order total £200 is £5.99",
     ],
   ])(
     "should return results unchanged from initial outputs",

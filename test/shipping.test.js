@@ -20,12 +20,13 @@ describe("calculateShipping", () => {
       expect(shippingCost).toBe(expectedCost);
     }
   );
-  it.each(Array.from({ length: 200 }, (_, i) => i + 1))(
+  it.each(Array.from({ length: 300 }, (_, i) => i + 1))(
     "should calculate the correct shipping costs for region: OTHER, total: %i",
     async (total) => {
       const shippingCost = await calculateShipping("OTHER", total);
+      const expectedCost = total < 200 ? 9.99 : 5.99;
 
-      expect(shippingCost).toBe(9.99);
+      expect(shippingCost).toBe(expectedCost);
     }
   );
 

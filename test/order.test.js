@@ -55,7 +55,10 @@ describe("order", () => {
 
       const totalIncludingShipping = await order.totalIncludingShipping();
 
-      expect(totalIncludingShipping).toBe(price * quantity + 9.99);
+      const itemCost = price * quantity;
+      const shippingCost = itemCost < 200 ? 9.99 : 5.99;
+
+      expect(totalIncludingShipping).toBe(itemCost + shippingCost);
     }
   );
 
