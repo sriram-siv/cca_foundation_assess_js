@@ -1,5 +1,4 @@
 import { calculateShipping, getCountryRegion } from "./shipping";
-import { Warehouse } from "./warehouse";
 
 export class Item {
   product;

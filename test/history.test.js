@@ -34,4 +34,8 @@ describe("history", () => {
   it("should add orders to the history array", () => {
     expect(salesHistory.orders.length).toBe(3);
   });
+
+  it("should get the order history for a product", () => {
+    expect(salesHistory.getProductHistory(productB)).toEqual([orderA, orderB]);
+  });
 });
