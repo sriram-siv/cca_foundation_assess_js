@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import { Product, Warehouse } from "../warehouse";
 
 describe("Warehouse", () => {
+  const product = new Product("test", "Test Product", 100);
+
   it("should instantiate with an empty catalogue", () => {
     const warehouse = new Warehouse();
 
@@ -10,7 +12,6 @@ describe("Warehouse", () => {
 
   it("should be able to receive stock for a new product", () => {
     const warehouse = new Warehouse();
-    const product = new Product("test", "Test Product", 100);
 
     warehouse.receiveStock(product, 20);
 
@@ -19,7 +20,6 @@ describe("Warehouse", () => {
 
   it("should be able to receive stock for an existing product", () => {
     const warehouse = new Warehouse();
-    const product = new Product("test", "Test Product", 100);
 
     warehouse.receiveStock(product, 0);
     expect(warehouse.productStockDictionary.test).toBe(0);
@@ -30,7 +30,6 @@ describe("Warehouse", () => {
 
   it("should be able to adjust stock for a product", () => {
     const warehouse = new Warehouse();
-    const product = new Product("test", "Test Product", 100);
 
     warehouse.receiveStock(product, 50);
     warehouse.adjustStock(product, 20);
@@ -40,7 +39,6 @@ describe("Warehouse", () => {
 
   it("should not be able to adjust stock for a product by more than its available quantity", () => {
     const warehouse = new Warehouse();
-    const product = new Product("test", "Test Product", 100);
 
     warehouse.receiveStock(product, 50);
 
@@ -49,14 +47,13 @@ describe("Warehouse", () => {
 
   it("should not be able to adjust stock for a product not in the inventory", () => {
     const warehouse = new Warehouse();
-    const product = new Product("test", "Test Product", 100);
 
     expect(() => warehouse.adjustStock(product, 100)).toThrow();
   });
 
   it("should return the quantity of a product in the inventory", () => {
     const warehouse = new Warehouse();
-    const product = new Product("test", "Test Product", 100);
+
     warehouse.receiveStock(product, 100);
 
     expect(warehouse.checkStock(product)).toBe(100);
@@ -64,7 +61,6 @@ describe("Warehouse", () => {
 
   it("should return the quantity of 0 for a product in the inventory", () => {
     const warehouse = new Warehouse();
-    const product = new Product("test", "Test Product", 100);
 
     expect(warehouse.checkStock(product)).toBe(0);
   });

@@ -1,4 +1,4 @@
-class Item {
+export class Item {
   product;
   quantity;
 
@@ -8,12 +8,17 @@ class Item {
   }
 }
 
-class Order {
+export class Order {
   items;
   shippingAddress;
 
   constructor(shippingAddress) {
     this.items = [];
     this.shippingAddress = shippingAddress;
+  }
+
+  addItem(product, quantity) {
+    const item = new Item(product, quantity);
+    this.items.push(item);
   }
 }
