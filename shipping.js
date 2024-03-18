@@ -8,10 +8,10 @@ export async function getCountryRegion(country) {
       .get(url, (resp) => {
         let data = "";
 
+        const appendChunk = (chunk) => (data += chunk);
+
         // A chunk of data has been received.
-        resp.on("data", (chunk) => {
-          data += chunk;
-        });
+        resp.on("data", appendChunk);
 
         // The whole response has been received. Process the data.
         resp.on("end", () => {
@@ -23,9 +23,7 @@ export async function getCountryRegion(country) {
           }
         });
       })
-      .on("error", (error) => {
-        rej(error);
-      });
+      .on("error", (error) => rej(error));
   });
 }
 
