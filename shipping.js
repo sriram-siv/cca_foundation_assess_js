@@ -1,4 +1,4 @@
-const https = require("https");
+import https from "https";
 
 async function getCountryRegion(country) {
   const url = `https://npovmrfcyzu2gu42pmqa7zce6a0zikbf.lambda-url.eu-west-2.on.aws/?country=${country}`;
@@ -29,7 +29,7 @@ async function getCountryRegion(country) {
   });
 }
 
-async function calculateShipping(country, orderTotal) {
+export async function calculateShipping(country, orderTotal) {
   return new Promise((res, rej) => {
     getCountryRegion(country)
       .then((region) => {
@@ -54,5 +54,3 @@ async function calculateShipping(country, orderTotal) {
       .catch((error) => rej(error));
   });
 }
-
-module.exports = calculateShipping;

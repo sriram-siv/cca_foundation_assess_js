@@ -1,4 +1,4 @@
-const calculateShipping = require("./shipping");
+import { calculateShipping } from "./shipping";
 
 export async function printShippingCosts(country, orderTotal) {
   calculateShipping(country, orderTotal)
