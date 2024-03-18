@@ -13,4 +13,8 @@ export class SalesHistory {
       order.items.some((item) => item.product.id === product.id)
     );
   }
+
+  getAddressHistory(address) {
+    return this.orders.filter((order) => order.shippingAddress === address);
+  }
 }

@@ -38,4 +38,11 @@ describe("history", () => {
   it("should get the order history for a product", () => {
     expect(salesHistory.getProductHistory(productB)).toEqual([orderA, orderB]);
   });
+
+  it("should get the order history for an address", () => {
+    expect(salesHistory.getAddressHistory(Country.FRANCE)).toEqual([
+      orderB,
+      orderC,
+    ]);
+  });
 });
