@@ -4,7 +4,6 @@ export async function printShippingCosts(country, orderTotal) {
   const region = await getCountryRegion(country).catch(console.error);
 
   if (region) {
-    console.log(region);
     calculateShipping(region, orderTotal)
       .then((shippingCost) => {
         return console.log(
