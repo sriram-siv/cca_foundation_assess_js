@@ -46,4 +46,10 @@ export class Order {
 
     return totalItemsCost + shippingCost;
   }
+
+  confirm() {
+    this.items.forEach(({ product, quantity }) => {
+      this.warehouse.adjustStock(product, quantity);
+    });
+  }
 }

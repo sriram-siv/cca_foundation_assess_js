@@ -54,4 +54,26 @@ describe("order", () => {
       expect(totalIncludingShipping).toBe(price * quantity + 9.99);
     }
   );
+
+  it("should adjust the stock in the inventory when completing an order", () => {
+    const warehouse = new Warehouse();
+    const productA = new Product("a", "Test Product A", 10);
+    const productB = new Product("b", "Test Product B", 10);
+    const productC = new Product("c", "Test Product C", 10);
+    const order = new Order(Country.UNITED_KINGDOM, warehouse);
+
+    warehouse.receiveStock(productA, 100);
+    warehouse.receiveStock(productB, 100);
+    warehouse.receiveStock(productC, 100);
+
+    order.addItem(productA, 25);
+    order.addItem(productB, 50);
+    order.addItem(productC, 100);
+
+    order.confirm();
+
+    expect(warehouse.checkStock(productA)).toBe(75);
+    expect(warehouse.checkStock(productB)).toBe(50);
+    expect(warehouse.checkStock(productC)).toBe(0);
+  });
 });
