@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "http": "^0.0.1-security",
-    "mocha": "^10.3.0"
+    "vitest": "^1.4.0"
   }
 }
