@@ -8,10 +8,9 @@ export async function getCountryRegion(country) {
       .get(url, (resp) => {
         let data = "";
 
-        const appendChunk = (chunk) => (data += chunk);
+        const appendChunkedData = (chunk) => (data += chunk);
 
-        // A chunk of data has been received.
-        resp.on("data", appendChunk);
+        resp.on("data", appendChunkedData);
 
         // The whole response has been received. Process the data.
         resp.on("end", () => {
