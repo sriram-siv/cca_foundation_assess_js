@@ -65,3 +65,15 @@ describe("Warehouse", () => {
     expect(warehouse.checkStock(product)).toBe(0);
   });
 });
+
+describe("Product", () => {
+  it("should instantiate a product object", () => {
+    const product = new Product("test", "Test Product", 100);
+
+    expect(product).toEqual({
+      id: "test",
+      description: "Test Product",
+      price: 100,
+    });
+  });
+});
