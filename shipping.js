@@ -25,7 +25,11 @@ export async function getCountryRegion(country) {
   });
 }
 
-export async function calculateShipping(region, orderTotal) {
+export function calculateShipping(region, orderTotal) {
+  if (typeof orderTotal !== "number" || orderTotal <= 0) {
+    throw new Error("Invalid total");
+  }
+
   if (region === "UK") {
     return orderTotal < 100 ? 4.99 : 0;
   }

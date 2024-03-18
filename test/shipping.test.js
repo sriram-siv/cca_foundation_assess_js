@@ -1,5 +1,7 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { calculateShipping } from "../shipping";
+
+const spyConsoleError = vi.spyOn(console, "error");
 
 describe("calculateShipping", () => {
   it.each([
@@ -13,6 +15,19 @@ describe("calculateShipping", () => {
     async (region, total, expectedCost) => {
       const shippingCost = await calculateShipping(region, total);
       expect(shippingCost).toBe(expectedCost);
+    }
+  );
+
+  it.each([null, undefined, -100, 0])(
+    "should throw an error when passed %s total",
+    async (total) => {
+      let shippingCost;
+
+      expect(
+        () => (shippingCost = calculateShipping("UK", total))
+      ).toThrowError();
+
+      expect(shippingCost).toBeUndefined();
     }
   );
 });
