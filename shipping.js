@@ -26,21 +26,13 @@ export async function getCountryRegion(country) {
 }
 
 export async function calculateShipping(region, orderTotal) {
-  let shipping = 0.0;
-
   if (region === "UK") {
-    if (orderTotal < 100.0) {
-      shipping = 4.99;
-    }
-  } else if (region === "EU") {
-    if (orderTotal < 100) {
-      shipping = 8.99;
-    } else {
-      shipping = 4.99;
-    }
-  } else if (region === "OTHER") {
-    shipping = 9.99;
+    return orderTotal < 100 ? 4.99 : 0;
   }
 
-  return shipping;
+  if (region === "EU") {
+    return orderTotal < 100 ? 8.99 : 4.99;
+  }
+
+  return 9.99;
 }
