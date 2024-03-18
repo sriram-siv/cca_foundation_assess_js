@@ -35,13 +35,12 @@ async function calculateShipping(country, orderTotal) {
 
             res(shipping);
           } catch (error) {
-            rej(shipping);
+            rej(error);
           }
         });
       })
-      .on("error", (err) => {
-        // Use the callback to return HTTP request errors
-        rej(err);
+      .on("error", (error) => {
+        rej(error);
       });
   });
 }
