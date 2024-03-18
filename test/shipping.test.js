@@ -1,7 +1,5 @@
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { calculateShipping } from "../shipping";
-
-const spyConsoleError = vi.spyOn(console, "error");
 
 describe("calculateShipping", () => {
   it.each([
