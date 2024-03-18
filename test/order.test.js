@@ -1,7 +1,16 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { Product } from "../warehouse";
 import { Order } from "../order";
 import Country from "../countries";
+
+vi.mock("../shipping.js", async () => {
+  const { calculateShipping } = await vi.importActual("../shipping.js");
+
+  return {
+    calculateShipping,
+    getCountryRegion: () => new Promise((res) => res("OTHER")),
+  };
+});
 
 describe("order", () => {
   it("should add an item to the order with a specified quantity", () => {
@@ -19,12 +28,13 @@ describe("order", () => {
     ])
   )(
     "should calculate the correct total for the order with shipping when item price is %i and quantity is %i",
-    (price, quantity) => {
+    async (price, quantity) => {
       const order = new Order(Country.UNITED_KINGDOM);
       const product = new Product("test", "Test Product", price);
       order.addItem(product, quantity);
+      const totalIncludingShipping = await order.totalIncludingShipping();
 
-      expect(order.totalIncludingShipping).toBe(price * quantity);
+      expect(totalIncludingShipping).toBe(price * quantity + 9.99);
     }
   );
 });

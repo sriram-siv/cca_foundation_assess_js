@@ -1,3 +1,5 @@
+import { calculateShipping, getCountryRegion } from "./shipping";
+
 export class Item {
   product;
   quantity;
@@ -22,7 +24,7 @@ export class Order {
     this.items.push(item);
   }
 
-  get totalIncludingShipping() {
+  async totalIncludingShipping() {
     const totalItemsCost = this.items.reduce((total, { product, quantity }) => {
       const { price } = product;
       const itemAggregateCost = price * quantity;
@@ -30,6 +32,9 @@ export class Order {
       return total + itemAggregateCost;
     }, 0);
 
-    return totalItemsCost;
+    const region = await getCountryRegion(this.shippingAddress);
+    const shippingCost = calculateShipping(region, totalItemsCost);
+
+    return totalItemsCost + shippingCost;
   }
 }
