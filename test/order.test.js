@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import { Product, Warehouse } from "../warehouse";
 import { Order } from "../order";
+import { SalesHistory } from "../history";
 import Country from "../countries";
 
 vi.mock("../shipping.js", async () => {
@@ -14,9 +15,10 @@ vi.mock("../shipping.js", async () => {
 
 describe("order", () => {
   it("should add an item to the order with a specified quantity", () => {
+    const salesHistory = new SalesHistory();
     const warehouse = new Warehouse();
     const product = new Product("test", "Test Product", 100);
-    const order = new Order(Country.UNITED_KINGDOM, warehouse);
+    const order = new Order(Country.UNITED_KINGDOM, warehouse, salesHistory);
 
     warehouse.receiveStock(product, 1000);
     order.addItem(product, 25);
@@ -25,9 +27,10 @@ describe("order", () => {
   });
 
   it("should throw an error when there is not enough stock for adding an item to the order", () => {
+    const salesHistory = new SalesHistory();
     const warehouse = new Warehouse();
     const product = new Product("test", "Test Product", 100);
-    const order = new Order(Country.UNITED_KINGDOM, warehouse);
+    const order = new Order(Country.UNITED_KINGDOM, warehouse, salesHistory);
 
     warehouse.receiveStock(product, 10);
 
@@ -42,9 +45,10 @@ describe("order", () => {
   )(
     "should calculate the correct total for the order with shipping when item price is %i and quantity is %i",
     async (price, quantity) => {
+      const salesHistory = new SalesHistory();
       const warehouse = new Warehouse();
       const product = new Product("test", "Test Product", price);
-      const order = new Order(Country.UNITED_KINGDOM, warehouse);
+      const order = new Order(Country.UNITED_KINGDOM, warehouse, salesHistory);
 
       warehouse.receiveStock(product, quantity);
       order.addItem(product, quantity);
@@ -56,11 +60,12 @@ describe("order", () => {
   );
 
   it("should adjust the stock in the inventory when completing an order", () => {
+    const salesHistory = new SalesHistory();
     const warehouse = new Warehouse();
     const productA = new Product("a", "Test Product A", 10);
     const productB = new Product("b", "Test Product B", 10);
     const productC = new Product("c", "Test Product C", 10);
-    const order = new Order(Country.UNITED_KINGDOM, warehouse);
+    const order = new Order(Country.UNITED_KINGDOM, warehouse, salesHistory);
 
     warehouse.receiveStock(productA, 100);
     warehouse.receiveStock(productB, 100);

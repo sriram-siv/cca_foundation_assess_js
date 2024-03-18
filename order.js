@@ -15,11 +15,13 @@ export class Order {
   items;
   shippingAddress;
   warehouse;
+  salesHistory;
 
-  constructor(shippingAddress, warehouse) {
+  constructor(shippingAddress, warehouse, salesHistory) {
     this.items = [];
     this.shippingAddress = shippingAddress;
     this.warehouse = warehouse;
+    this.salesHistory = salesHistory;
   }
 
   addItem(product, quantity) {
@@ -51,5 +53,6 @@ export class Order {
     this.items.forEach(({ product, quantity }) => {
       this.warehouse.adjustStock(product, quantity);
     });
+    this.salesHistory.addOrder(this);
   }
 }
