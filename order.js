@@ -21,4 +21,15 @@ export class Order {
     const item = new Item(product, quantity);
     this.items.push(item);
   }
+
+  get totalIncludingShipping() {
+    const totalItemsCost = this.items.reduce((total, { product, quantity }) => {
+      const { price } = product;
+      const itemAggregateCost = price * quantity;
+
+      return total + itemAggregateCost;
+    }, 0);
+
+    return totalItemsCost;
+  }
 }
