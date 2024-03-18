@@ -37,4 +37,8 @@ export class Warehouse {
 
     this.productStockDictionary[product.id] = currentStock - quantity;
   }
+
+  checkStock(product) {
+    return this.productStockDictionary[product.id] ?? 0;
+  }
 }

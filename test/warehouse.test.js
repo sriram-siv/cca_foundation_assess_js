@@ -53,4 +53,19 @@ describe("Warehouse", () => {
 
     expect(() => warehouse.adjustStock(product, 100)).toThrow();
   });
+
+  it("should return the quantity of a product in the inventory", () => {
+    const warehouse = new Warehouse();
+    const product = new Product("test", "Test Product", 100);
+    warehouse.receiveStock(product, 100);
+
+    expect(warehouse.checkStock(product)).toBe(100);
+  });
+
+  it("should return the quantity of 0 for a product in the inventory", () => {
+    const warehouse = new Warehouse();
+    const product = new Product("test", "Test Product", 100);
+
+    expect(warehouse.checkStock(product)).toBe(0);
+  });
 });
