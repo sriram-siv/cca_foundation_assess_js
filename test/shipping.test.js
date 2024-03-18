@@ -2,17 +2,30 @@ import { describe, expect, it } from "vitest";
 import { calculateShipping } from "../shipping";
 
 describe("calculateShipping", () => {
-  it.each([
-    ["UK", 99.99, 4.99],
-    ["UK", 100, 0],
-    ["EU", 99.99, 8.99],
-    ["EU", 100, 4.99],
-    ["OTHER", 100, 9.99],
-  ])(
-    "should calculate the correct shipping costs for region: %s, total: %i",
-    async (region, total, expectedCost) => {
-      const shippingCost = await calculateShipping(region, total);
+  it.each(Array.from({ length: 200 }, (_, i) => i + 1))(
+    "should calculate the correct shipping costs for region: UK, total: %i",
+    async (total) => {
+      const shippingCost = await calculateShipping("UK", total);
+      const expectedCost = total < 100 ? 4.99 : 0;
+
       expect(shippingCost).toBe(expectedCost);
+    }
+  );
+  it.each(Array.from({ length: 200 }, (_, i) => i + 1))(
+    "should calculate the correct shipping costs for region: EU, total: %i",
+    async (total) => {
+      const shippingCost = await calculateShipping("EU", total);
+      const expectedCost = total < 100 ? 8.99 : 4.99;
+
+      expect(shippingCost).toBe(expectedCost);
+    }
+  );
+  it.each(Array.from({ length: 200 }, (_, i) => i + 1))(
+    "should calculate the correct shipping costs for region: OTHER, total: %i",
+    async (total) => {
+      const shippingCost = await calculateShipping("OTHER", total);
+
+      expect(shippingCost).toBe(9.99);
     }
   );
 
