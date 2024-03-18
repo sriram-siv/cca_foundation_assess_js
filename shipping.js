@@ -1,6 +1,6 @@
 import https from "https";
 
-async function getCountryRegion(country) {
+export async function getCountryRegion(country) {
   const url = `https://npovmrfcyzu2gu42pmqa7zce6a0zikbf.lambda-url.eu-west-2.on.aws/?country=${country}`;
 
   return new Promise((res, rej) => {
@@ -29,28 +29,22 @@ async function getCountryRegion(country) {
   });
 }
 
-export async function calculateShipping(country, orderTotal) {
-  return new Promise((res, rej) => {
-    getCountryRegion(country)
-      .then((region) => {
-        let shipping = 0.0;
+export async function calculateShipping(region, orderTotal) {
+  let shipping = 0.0;
 
-        if (region === "UK") {
-          if (orderTotal < 100.0) {
-            shipping = 4.99;
-          }
-        } else if (region === "EU") {
-          if (orderTotal < 100) {
-            shipping = 8.99;
-          } else {
-            shipping = 4.99;
-          }
-        } else if (region === "OTHER") {
-          shipping = 9.99;
-        }
+  if (region === "UK") {
+    if (orderTotal < 100.0) {
+      shipping = 4.99;
+    }
+  } else if (region === "EU") {
+    if (orderTotal < 100) {
+      shipping = 8.99;
+    } else {
+      shipping = 4.99;
+    }
+  } else if (region === "OTHER") {
+    shipping = 9.99;
+  }
 
-        res(shipping);
-      })
-      .catch((error) => rej(error));
-  });
+  return shipping;
 }

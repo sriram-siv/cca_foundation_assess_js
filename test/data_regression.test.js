@@ -4,6 +4,22 @@ import Country from "../countries";
 
 const spyConsole = vi.spyOn(console, "log");
 
+vi.mock("../shipping.js", async () => {
+  const { calculateShipping } = await vi.importActual("../shipping.js");
+
+  const regionLookup = {
+    "United Kingdom": "UK",
+    France: "EU",
+    Albania: "OTHER",
+  };
+
+  return {
+    calculateShipping,
+    getCountryRegion: (country) =>
+      new Promise((res) => res(regionLookup[country])),
+  };
+});
+
 describe("printShippingCosts", () => {
   beforeEach(() => {
     spyConsole.mockClear();
@@ -43,8 +59,7 @@ describe("printShippingCosts", () => {
   ])(
     "should return results unchanged from initial outputs",
     async (country, orderTotal, output) => {
-      printShippingCosts(country, orderTotal);
-      await new Promise((res) => setTimeout(res, 1000));
+      await printShippingCosts(country, orderTotal);
 
       expect(spyConsole).toHaveBeenCalledWith(output);
     }
