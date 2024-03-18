@@ -12,15 +12,16 @@ export async function getCountryRegion(country) {
 
         resp.on("data", appendChunkedData);
 
-        // The whole response has been received. Process the data.
-        resp.on("end", () => {
+        const handleCompletedResponse = () => {
           try {
             const { region } = JSON.parse(data);
             res(region);
           } catch (error) {
             rej(error);
           }
-        });
+        };
+
+        resp.on("end", handleCompletedResponse);
       })
       .on("error", (error) => rej(error));
   });
