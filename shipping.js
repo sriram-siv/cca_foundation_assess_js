@@ -3,27 +3,25 @@ import https from "https";
 export async function getCountryRegion(country) {
   const url = `https://npovmrfcyzu2gu42pmqa7zce6a0zikbf.lambda-url.eu-west-2.on.aws/?country=${country}`;
 
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     https
-      .get(url, (resp) => {
+      .get(url, (response) => {
         let data = "";
 
-        const appendChunkedData = (chunk) => (data += chunk);
-
-        resp.on("data", appendChunkedData);
+        response.on("data", data.concat);
 
         const handleCompletedResponse = () => {
           try {
             const { region } = JSON.parse(data);
-            res(region);
+            resolve(region);
           } catch (error) {
-            rej(error);
+            reject(error);
           }
         };
 
-        resp.on("end", handleCompletedResponse);
+        response.on("end", handleCompletedResponse);
       })
-      .on("error", (error) => rej(error));
+      .on("error", reject);
   });
 }
 
