@@ -28,13 +28,13 @@ describe("printShippingCosts", () => {
   it.each([
     [
       Country.UNITED_KINGDOM,
-      100.0,
-      "Shipping cost to United Kingdom for order total £100 is £0",
+      120.0,
+      "Shipping cost to United Kingdom for order total £120 is £0",
     ],
     [
       Country.UNITED_KINGDOM,
-      99.99,
-      "Shipping cost to United Kingdom for order total £99.99 is £4.99",
+      119.99,
+      "Shipping cost to United Kingdom for order total £119.99 is £4.99",
     ],
     [
       Country.FRANCE,

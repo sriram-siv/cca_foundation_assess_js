@@ -6,7 +6,7 @@ describe("calculateShipping", () => {
     "should calculate the correct shipping costs for region: UK, total: %i",
     async (total) => {
       const shippingCost = await calculateShipping("UK", total);
-      const expectedCost = total < 100 ? 4.99 : 0;
+      const expectedCost = total < 120 ? 4.99 : 0;
 
       expect(shippingCost).toBe(expectedCost);
     }

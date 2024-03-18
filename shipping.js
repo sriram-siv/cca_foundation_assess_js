@@ -31,7 +31,7 @@ export function calculateShipping(region, orderTotal) {
   }
 
   if (region === "UK") {
-    return orderTotal < 100 ? 4.99 : 0;
+    return orderTotal < 120 ? 4.99 : 0;
   }
 
   if (region === "EU") {
