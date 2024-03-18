@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { Product } from "../warehouse";
+import { Product, Warehouse } from "../warehouse";
 import { Order } from "../order";
 import Country from "../countries";
 
@@ -14,11 +14,24 @@ vi.mock("../shipping.js", async () => {
 
 describe("order", () => {
   it("should add an item to the order with a specified quantity", () => {
-    const order = new Order(Country.UNITED_KINGDOM);
+    const warehouse = new Warehouse();
     const product = new Product("test", "Test Product", 100);
+    const order = new Order(Country.UNITED_KINGDOM, warehouse);
+
+    warehouse.receiveStock(product, 1000);
     order.addItem(product, 25);
 
     expect(order.items).toEqual([{ product, quantity: 25 }]);
+  });
+
+  it("should throw an error when there is not enough stock for adding an item to the order", () => {
+    const warehouse = new Warehouse();
+    const product = new Product("test", "Test Product", 100);
+    const order = new Order(Country.UNITED_KINGDOM, warehouse);
+
+    warehouse.receiveStock(product, 10);
+
+    expect(() => order.addItem(product, 25)).toThrow();
   });
 
   it.each(
@@ -29,9 +42,13 @@ describe("order", () => {
   )(
     "should calculate the correct total for the order with shipping when item price is %i and quantity is %i",
     async (price, quantity) => {
-      const order = new Order(Country.UNITED_KINGDOM);
+      const warehouse = new Warehouse();
       const product = new Product("test", "Test Product", price);
+      const order = new Order(Country.UNITED_KINGDOM, warehouse);
+
+      warehouse.receiveStock(product, quantity);
       order.addItem(product, quantity);
+
       const totalIncludingShipping = await order.totalIncludingShipping();
 
       expect(totalIncludingShipping).toBe(price * quantity + 9.99);

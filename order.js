@@ -1,4 +1,5 @@
 import { calculateShipping, getCountryRegion } from "./shipping";
+import { Warehouse } from "./warehouse";
 
 export class Item {
   product;
@@ -13,13 +14,21 @@ export class Item {
 export class Order {
   items;
   shippingAddress;
+  warehouse;
 
-  constructor(shippingAddress) {
+  constructor(shippingAddress, warehouse) {
     this.items = [];
     this.shippingAddress = shippingAddress;
+    this.warehouse = warehouse;
   }
 
   addItem(product, quantity) {
+    const productStock = this.warehouse.productStockDictionary[product.id] ?? 0;
+
+    if (productStock < quantity) {
+      throw new Error("Insufficient stock to add item to order");
+    }
+
     const item = new Item(product, quantity);
     this.items.push(item);
   }
